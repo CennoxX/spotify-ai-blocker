@@ -36,7 +36,9 @@ The script automatically blocks artists from a community list of AI-generated mu
 5. **Persistence:** Remembers blocked artists and last run date using `localStorage` to prevent duplicate requests.
 
 ## Help Improve the List
-Found an AI artist? Submit them: [GitHub submission form](https://github.com/CennoxX/spotify-ai-blocker/issues/new?template=ai-artist.yml)
+Found an AI-generated artist that is not on the list? Submit them using the [GitHub submission form](https://github.com/CennoxX/spotify-ai-blocker/issues/new?template=ai-artist.yml).
+
+You can submit the currently playing artist directly from Spotify Web: Hold **Shift + Right Click** (Spotify disables the normal context menu), then go to **Tampermonkey → Spotify AI Artist Blocker → Report AI Artist on GitHub**. The submission form will open automatically with the artist information already pre-filled.
 
 ## Similar Projects
 - [SubmitHub AI Song Checker](https://www.submithub.com/story/ai-song-checker) – Tool to detect AI-generated songs
