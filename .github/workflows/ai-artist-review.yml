@@ -10,28 +10,24 @@ permissions:
 
 jobs:
   review:
-    if: github.event.action == 'opened' || github.event.label.name == 'accepted' || github.event.label.name == 'rejected'
+    if: ${{ github.event.action == 'opened' || github.event.label.name == 'accepted' || github.event.label.name == 'rejected' }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
         with:
-          node-version: 18
-
-      - name: Install dependencies
-        working-directory: .github/scripts
-        run: npm install
+          deno-version: lts
 
       - name: Process issue
         id: review
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          node .github/scripts/review.js
+          deno run --allow-read --allow-write --allow-env --allow-net .github/scripts/review.js
 
       - name: Commit and push changes
         if: steps.review.outputs.artist_id
