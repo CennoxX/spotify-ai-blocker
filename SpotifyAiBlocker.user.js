@@ -82,7 +82,7 @@
         return false;
     }
 
-    function toastMessage(number) {
+    async function toastMessage(number) {
         var container = document.createElement("div");
         container.innerHTML = `
 <div class="notistack-SnackbarContainer" style="position:fixed;bottom:100px;left:50%;transform:translateX(-50%)">
@@ -96,7 +96,11 @@
     </div>
   </div>
 </div>`;
-        document.querySelector(".VTO__modal-slot").appendChild(container);
+        let modalSlot = null;
+        do {
+            modalSlot = document.querySelector(".VTO__modal-slot");
+        } while (!modalSlot && await randomDelay());
+        modalSlot.appendChild(container);
         setTimeout(()=>{
             var snackbar = container.querySelector(".notistack-Snackbar");
             snackbar.style.transition = "opacity 0.3s";
@@ -104,8 +108,12 @@
             setTimeout(()=>container.remove(),300);
         },5000);
     }
+
+    function randomDelay() {
+        return new Promise(r => setTimeout(() => r(true), 500 + Math.random() * 250));
+    }
+
     async function main() {
-        const randomDelay = () => new Promise(r => setTimeout(r, 500 + Math.random() * 250));
         try {
             hasRun = true;
             const artists = await fetchArtistList();
