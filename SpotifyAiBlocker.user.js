@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Spotify AI Artist Blocker
-// @version      0.1.15
+// @version      0.1.16
 // @description  Automatically block AI-generated artists on Spotify using a crowd-sourced list
 // @author       CennoxX
 // @namespace    https://greasyfork.org/users/21515
@@ -168,6 +168,8 @@
     }
 
     async function getPlayingArtistInfo() {
+        document.querySelector('[data-restore-focus-key="device_picker"][data-active="true"],[data-testid="control-button-queue"][data-active="true"]')?.click();
+        await new Promise(requestAnimationFrame);
         const trackId = document.querySelector('[data-context-item-type="track"]')?.href.split("track%3A").pop();
         const el = document.querySelector('.Root [data-testid="now-playing-bar"] [data-testid="context-item-info-artist"]');
         if (!trackId || !el)
