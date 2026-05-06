@@ -38,6 +38,10 @@ async function updateIssue(data) {
   await githubRequest(`/issues/${issue_number}`, "PATCH", data);
 }
 
+async function addComment(body) {
+  await githubRequest(`/issues/${issue_number}/comments`, "POST", { body });
+}
+
 async function getCollaboratorPermission(username) {
   const res = await githubRequest(`/collaborators/${username}/permission`, "GET");
   return res.permission;
@@ -58,7 +62,19 @@ async function detectTrack(trackId) {
     throw new Error("Invalid JSON response");
   }
   if (json.error) throw new Error(`${json.error} ${json.details || ""}`);
-  return Math.round(json?.result?.probability_ai_generated || 0);
+  return json?.result;
+}
+
+function createAnalysisComment(result) {
+  const { prediction, probability_ai_generated, confidence_score, spectral_probabilities: sp, temporal_probabilities: tp } = result;
+  const chartUrl = "https://quickchart.io/chart?h=100&c=" + encodeURIComponent(`{type:'horizontalBar',data:{labels:['Spectral Analysis','Temporal Analysis'],datasets:[{label:'Human',backgroundColor:'#22c55e',data:[${sp.human},${tp.human}]},{label:'Processed AI',backgroundColor:'#fbbf24',data:[${sp.processed_ai},${tp.processed_ai}]},{label:'Pure AI',backgroundColor:'#ef4444',data:[${sp.pure_ai},${tp.pure_ai}]}]},options:{legend:{position:'bottom'},scales:{xAxes:[{stacked:true,ticks:{min:0,max:100,display:false},gridLines:{display:false}}],yAxes:[{stacked:true,gridLines:{display:false}}]},plugins:{datalabels:{color:'#111',font:{size:8},formatter:(i)=>i.toFixed(0)+' %'}}}}`);
+  return `## AI Analysis Report
+
+Prediction: **${prediction}** · AI Probability: ${Math.floor(probability_ai_generated)}% · Confidence: ${Math.floor(confidence_score)}%
+> The analysis combines spectral and temporal indicators to estimate the likelihood of human or AI generation. Results should be interpreted as probabilistic signals rather than absolute classification.
+
+![AI Analysis Chart](${chartUrl})
+<sub>Powered by [SubmitHub](https://www.submithub.com/ai-song-checker)</sub>`;
 }
 
 async function run() {
@@ -109,14 +125,15 @@ async function run() {
 
   await addLabels(["checked"]);
 
-  let probability = 0;
-  try { probability = await detectTrack(trackId); } catch (err) {
+  let result;
+  try { result = await detectTrack(trackId); } catch (err) {
     try { await removeLabel("checked"); } catch (_) {};
     return console.log("Failed to detect track:", err.message);
   }
-
+  const probability = result?.probability_ai_generated ?? 0;
   if (probability > 50) await acceptArtist();
   console.log(`AI probability ${probability}%`);
+  await addComment(createAnalysisComment(result));
 }
 
 run().catch(err => {
