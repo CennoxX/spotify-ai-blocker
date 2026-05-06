@@ -111,11 +111,11 @@ async function run() {
 
   let probability = 0;
   try { probability = await detectTrack(trackId); } catch (err) {
-    console.log("Failed to detect track:", err.message);
+    try { await removeLabel("checked"); } catch (_) {};
+    return console.log("Failed to detect track:", err.message);
   }
 
   if (probability > 50) await acceptArtist();
-
   console.log(`AI probability ${probability}%`);
 }
 
