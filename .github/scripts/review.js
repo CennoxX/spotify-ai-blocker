@@ -93,7 +93,7 @@ async function run() {
   if (rows.some(l => l.includes(id))) {
     try { await removeLabel("accepted"); } catch (_) {}
     await addLabels(["duplicate"]);
-    await updateIssue({ state: "closed" });
+    await updateIssue({ state: "closed", state_reason: "duplicate" });
     return console.log("Duplicate artist");
   }
 
