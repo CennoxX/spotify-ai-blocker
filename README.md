@@ -48,6 +48,7 @@ You can also submit the currently playing or the currently opened artist anonymo
 - [Soul Over AI](https://github.com/xoundbyte/soul-over-ai) – Curated list of AI artists across platforms
 - [Spotify AI Blocklist](https://github.com/eye-wave/spotify-ai-blocklist) – AI blocklist for Spicetify
 - [Spotify AI Band Blocker](https://github.com/Reginald-Gillespie/Spotify-AI-Band-Blocker) – Spicetify plugin to block AI artists
+- [loved.music AI Artists](https://github.com/gounetmusic/loved-music-ai-artists) – Hand-verified list of AI artists, same CSV format, synced daily
 
 ## FAQ
 **Does this work in the Spotify app?**  
