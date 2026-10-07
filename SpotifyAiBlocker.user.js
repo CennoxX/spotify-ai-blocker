@@ -198,7 +198,6 @@
         if (!info)
             return;
         const { name, url, id, track } = info;
-        await blockArtists([id]);
         window.open(`https://spotify-ai-blocker.cennoxx.deno.net/?artist_url=${url}&example_track_url=${track}&artist_name=${name}`);
     });
 
@@ -207,8 +206,23 @@
         if (!info)
             return;
         const { name, url, id, track } = info;
-        await blockArtists([id]);
         window.open(`https://spotify-ai-blocker.cennoxx.deno.net/?artist_url=${url}&example_track_url=${track}&artist_name=${name}`);
+    });
+
+    GM_registerMenuCommand("Block opened AI Artist", async() => {
+        const info = await getOpenedArtistInfo();
+        if (!info)
+            return;
+        const { name, url, id, track } = info;
+        await blockArtists([id]);
+    });
+
+    GM_registerMenuCommand("Block playing AI Artist", async() => {
+        const info = await getPlayingArtistInfo();
+        if (!info)
+            return;
+        const { name, url, id, track } = info;
+        await blockArtists([id]);
     });
 
     GM_registerMenuCommand("Copy opened AI Artists name and ID", async() => {
