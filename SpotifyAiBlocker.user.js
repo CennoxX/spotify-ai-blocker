@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Spotify AI Artist Blocker
-// @version      0.1.17
+// @version      0.1.18
 // @description  Automatically block AI-generated artists on Spotify using a crowd-sourced list
 // @author       CennoxX
 // @namespace    https://greasyfork.org/users/21515
@@ -168,9 +168,15 @@
     }
 
     async function getPlayingArtistInfo() {
-        document.querySelector('[data-restore-focus-key="device_picker"][data-active="true"],[data-testid="control-button-queue"][data-active="true"]')?.click();
-        await new Promise(requestAnimationFrame);
-        const trackId = document.querySelector('[data-context-item-type="track"]')?.href.split("track%3A").pop();
+        const getTrackId = () => document.querySelector('[href*="?highlight=spotify:track:"]')?.href.match(/spotify:track:([A-Za-z0-9]+)/)?.[1];
+        const rightClick = () => document.querySelector("[data-testid=context-item-info-title] > span > a")?.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true }));
+        let trackId = getTrackId();
+        if (!trackId) {
+            rightClick();
+            await new Promise(requestAnimationFrame);
+            trackId = getTrackId();
+            rightClick();
+        }
         const el = document.querySelector('.Root [data-testid="now-playing-bar"] [data-testid="context-item-info-artist"]');
         if (!trackId || !el)
             return toastMessage("Couldn't find currently playing artist");
@@ -206,20 +212,18 @@
     });
 
     GM_registerMenuCommand("Copy opened AI Artists name and ID", async() => {
-        const info = getOpenedArtistInfo();
+        const info = await getOpenedArtistInfo();
         if (!info)
             return;
         const { name, id } = info;
-        await blockArtists([id]);
         GM_setClipboard(`${name},${id}`, "text");
     });
 
     GM_registerMenuCommand("Copy playing AI Artists name and ID", async() => {
-        const  info = getPlayingArtistInfo();
+        const  info = await getPlayingArtistInfo();
         if (!info)
             return;
         const { name, id } = info;
-        await blockArtists([id]);
         GM_setClipboard(`${name},${id}`, "text");
     });
 
