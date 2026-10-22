@@ -6,7 +6,7 @@ const csvPath = Deno.cwd() + "/SpotifyAiArtists.csv";
 
 // Safety limits against a broken or hijacked source: the run fails (and adds nothing) instead.
 const minSourceRows = 50;
-const maxNewPerRun = 600;
+const maxNewPerRun = 500;
 
 const idPattern = /^[0-9A-Za-z]{22}$/;
 
@@ -29,9 +29,9 @@ function parseCsvLine(line) {
   return fields;
 }
 
-// A name as a CSV field: quoted when it holds a comma or a quote, like the existing entries.
+// A name as a CSV field: replace , with _
 function csvField(value) {
-  return /[",]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value;
+  return value.replace(/,/g, "_");
 }
 
 async function fetchSource() {
