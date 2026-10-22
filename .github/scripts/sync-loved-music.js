@@ -6,7 +6,7 @@ const csvPath = Deno.cwd() + "/SpotifyAiArtists.csv";
 
 // Safety limits against a broken or hijacked source: the run fails (and adds nothing) instead.
 const minSourceRows = 50;
-const maxNewPerRun = 500;
+const maxNewPerRun = 600;
 
 const idPattern = /^[0-9A-Za-z]{22}$/;
 
