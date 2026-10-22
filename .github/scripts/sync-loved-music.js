@@ -5,7 +5,6 @@ const sourceUrl = "https://raw.githubusercontent.com/gounetmusic/loved-music-ai-
 const csvPath = Deno.cwd() + "/SpotifyAiArtists.csv";
 
 // Safety limits against a broken or hijacked source: the run fails (and adds nothing) instead.
-const minSourceRows = 50;
 const maxNewPerRun = 500;
 
 const idPattern = /^[0-9A-Za-z]{22}$/;
@@ -52,7 +51,6 @@ async function fetchSource() {
     }
     artists.push({ name, id });
   }
-  if (artists.length < minSourceRows) throw new Error(`Only ${artists.length} artists in the loved.music list (expected at least ${minSourceRows})`);
   return artists;
 }
 
