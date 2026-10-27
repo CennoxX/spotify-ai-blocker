@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Spotify AI Artist Blocker
-// @version      0.1.18
+// @version      0.1.19
 // @description  Automatically block AI-generated artists on Spotify using a crowd-sourced list
 // @author       CennoxX
 // @namespace    https://greasyfork.org/users/21515
@@ -168,19 +168,24 @@
     }
 
     async function getPlayingArtistInfo() {
-        const getTrackId = () => document.querySelector('[href*="?highlight=spotify:track:"]')?.href.match(/spotify:track:([A-Za-z0-9]+)/)?.[1];
-        const rightClick = () => document.querySelector("[data-testid=context-item-info-title] > span > a")?.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true }));
+        const widget = document.querySelector('[data-testid="now-playing-widget-v2"]');
+        const artistLink = widget?.querySelector('[data-testid="now-playing-widget-v2-byline"] a[href*="/artist/"]');
+        const albumLink = widget?.querySelector('a[href*="/album/"]');
+        const getTrackId = () => document.querySelector('#context-menu a[href*="highlight=spotify:track:"]')?.href.match(/spotify:track:([A-Za-z0-9]+)/)?.[1] ?? null;
         let trackId = getTrackId();
-        if (!trackId) {
-            rightClick();
-            await new Promise(requestAnimationFrame);
+        if (!trackId && albumLink) {
+            albumLink.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true, cancelable: true }));
+            await Promise.race([
+                waitForElement('#context-menu a[href*="highlight=spotify:track:"]'),
+                new Promise(r => setTimeout(r, 1000)),
+            ]);
             trackId = getTrackId();
-            rightClick();
+            albumLink.dispatchEvent(new MouseEvent("contextmenu", { bubbles: true, cancelable: true }));
         }
-        const el = document.querySelector('.Root [data-testid="now-playing-bar"] [data-testid="context-item-info-artist"]');
-        if (!trackId || !el)
+        if (!trackId || !artistLink)
             return toastMessage("Couldn't find currently playing artist");
-        return { name: el?.innerText, url: el?.href, id: el?.href?.match(/\/artist\/([^\s]+)/i)?.[1], track: "https://open.spotify.com/track/" + trackId };
+        const artistUrl = artistLink.href;
+        return { name: artistLink.textContent.trim(), url: artistUrl, id: artistUrl.match(/\/artist\/([A-Za-z0-9]+)/)?.[1] ?? null, track: "https://open.spotify.com/track/" + trackId };
     }
 
     async function getOpenedArtistInfo() {
@@ -215,16 +220,18 @@
         const info = await getOpenedArtistInfo();
         if (!info)
             return;
-        const { id } = info;
+        const { name, id } = info;
         await blockArtists([id]);
+        toastMessage(`${name} blocked`);
     });
 
     GM_registerMenuCommand("Block playing AI Artist only locally", async() => {
         const info = await getPlayingArtistInfo();
         if (!info)
             return;
-        const { id } = info;
+        const { name, id } = info;
         await blockArtists([id]);
+        toastMessage(`${name} blocked`);
     });
 
     GM_registerMenuCommand("Copy opened AI Artists name and ID", async() => {
@@ -233,6 +240,7 @@
             return;
         const { name, id } = info;
         GM_setClipboard(`${name},${id}`, "text");
+        toastMessage(`${name},${id} copied`);
     });
 
     GM_registerMenuCommand("Copy playing AI Artists name and ID", async() => {
@@ -241,6 +249,7 @@
             return;
         const { name, id } = info;
         GM_setClipboard(`${name},${id}`, "text");
+        toastMessage(`${name},${id} copied`);
     });
 
     addFetchWrapper();
