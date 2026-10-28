@@ -1,4 +1,8 @@
 # Spotify AI Music Blocker
+[![License: MIT](https://img.shields.io/github/license/CennoxX/spotify-ai-blocker)](LICENSE)
+[![Greasy Fork version](https://img.shields.io/greasyfork/v/546762)](https://greasyfork.org/en/scripts/546762)
+[![AI artists](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2FCennoxX%2Fspotify-ai-blocker%2Fmain%2F.github%2Fbadges%2Fartists.json)](SpotifyAiArtists.csv)
+
 **Block AI-generated music on Spotify**
 
 Automatically blocks artists known for AI-generated music using a community-maintained list.
