@@ -1,0 +1,25 @@
+name: Artist count
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  push:
+    paths: ["SpotifyAiArtists.csv"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          n=$(( $(grep -c . SpotifyAiArtists.csv) - 1 ))
+          mkdir -p .github/badges
+          printf '{"schemaVersion":1,"label":"AI artists","message":"%s","color":"blue"}\n' "$n" > .github/badges/artists.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/badges
+          git diff --cached --quiet || (git commit -m "Update artist count" && git push)
