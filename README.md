@@ -44,6 +44,15 @@ Found an AI-generated artist that is not on the list? Submit them using the [Git
 
 You can also submit the currently playing or the currently opened artist anonymously from Spotify Web: Hold **Shift + Right Click** (Spotify disables the normal context menu), then go to **Tampermonkey → Spotify AI Artist Blocker → Report playing AI Artist / Report opened AI Artist**. A new submission with the artist will automatically be created.
 
+## Data Sources
+`SpotifyAiArtists.csv` combines community submissions with artists imported from other lists. The script is MIT licensed; imported artists keep the license of the list they come from:
+
+- [loved.music AI Artists](https://github.com/gounetmusic/loved-music-ai-artists) – hand-verified list, synced daily – [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/): credit "loved.music" with a link to https://loved.music
+- [Soul Over AI](https://github.com/xoundbyte/soul-over-ai) (formerly romiem/ai-bands) – MIT
+- [Spotify AI Blocklist](https://github.com/eye-wave/spotify-ai-blocklist) – GPL-3.0
+
+If you reuse the list in your own project, please credit these sources as well.
+
 ## Similar Projects
 - [SubmitHub AI Song Checker](https://www.submithub.com/story/ai-song-checker) – Tool to detect AI-generated songs
 - [AI Music Detector](https://www.aimusicdetect.com/) – File-upload checker with a public 60-track benchmark and downloadable per-track data.
