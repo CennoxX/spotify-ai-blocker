@@ -44,16 +44,22 @@ Found an AI-generated artist that is not on the list? Submit them using the [Git
 
 You can also submit the currently playing or the currently opened artist anonymously from Spotify Web: Hold **Shift + Right Click** (Spotify disables the normal context menu), then go to **Tampermonkey → Spotify AI Artist Blocker → Report playing AI Artist / Report opened AI Artist**. A new submission with the artist will automatically be created.
 
+## Data Sources
+Spotify AI Music Blocker combines community submissions with artists imported from other lists.
+- [loved.music AI Artists](https://github.com/gounetmusic/loved-music-ai-artists) – [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), credit loved.music with a link to https://loved.music
+- [Zoundhub](https://github.com/xoundbyte/zoundhub) (formerly [Soul Over AI](https://github.com/xoundbyte/soul-over-ai) – [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/))
+- [Spotify AI Blocklist](https://github.com/eye-wave/spotify-ai-blocklist) – GPL-3.0
+
 ## Similar Projects
 - [SubmitHub AI Song Checker](https://www.submithub.com/story/ai-song-checker) – Tool to detect AI-generated songs
-- [AI Music Detector](https://www.aimusicdetect.com/) – File-upload checker with a public 60-track benchmark and downloadable per-track data.
+- [AI Music Detector](https://www.aimusicdetect.com/) – File-upload checker with a public 60-track benchmark and downloadable per-track data
 - [AI-Music Detection](https://github.com/deezer/ismir25-ai-music-detector) – Code for Deezer’s AI music tagging system
 - [Identifying Counterfeit Songs](https://openreview.net/forum?id=PY7KSh29Z8) – Paper about large-scale AI song detection datasets
 - [Using AI To Detect AI Music](https://www.youtube.com/watch?v=QVXfcIb3OKo) – YouTube video on identifying AI music
-- [Soul Over AI](https://github.com/xoundbyte/soul-over-ai) – Curated list of AI artists across platforms
+- [Zoundhub](https://github.com/xoundbyte/zoundhub) – Curated list of AI artists across platforms (formerly [Soul Over AI](https://github.com/xoundbyte/soul-over-ai))
 - [Spotify AI Blocklist](https://github.com/eye-wave/spotify-ai-blocklist) – AI blocklist for Spicetify
 - [Spotify AI Band Blocker](https://github.com/Reginald-Gillespie/Spotify-AI-Band-Blocker) – Spicetify plugin to block AI artists
-- [loved.music AI Artists](https://github.com/gounetmusic/loved-music-ai-artists) – Hand-verified list of AI artists, same CSV format, synced daily
+- [loved.music AI Artists](https://github.com/gounetmusic/loved-music-ai-artists) – Hand-verified list of AI artists
 
 ## FAQ
 **Does this work in the Spotify app?**  
