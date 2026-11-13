@@ -53,6 +53,7 @@ Spotify AI Music Blocker combines community submissions with artists imported fr
 ## Similar Projects
 - [SubmitHub AI Song Checker](https://www.submithub.com/story/ai-song-checker) – Tool to detect AI-generated songs
 - [AI Music Detector](https://www.aimusicdetect.com/) – File-upload checker with a public 60-track benchmark and downloadable per-track data
+- [Is This Song AI](https://isthissongai.app/) – Song checker that takes a Spotify, Apple Music, Deezer or YouTube link or an audio file and returns Likely AI, Unclear or Likely human with the reasons
 - [AI-Music Detection](https://github.com/deezer/ismir25-ai-music-detector) – Code for Deezer’s AI music tagging system
 - [Identifying Counterfeit Songs](https://openreview.net/forum?id=PY7KSh29Z8) – Paper about large-scale AI song detection datasets
 - [Using AI To Detect AI Music](https://www.youtube.com/watch?v=QVXfcIb3OKo) – YouTube video on identifying AI music
