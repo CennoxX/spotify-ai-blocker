@@ -18,9 +18,10 @@ Wondering if a Spotify artist is AI-generated? If you don’t want to install th
 Use the **Search this file** box at the top of the page to look for the artist name or ID.
 
 ## Installation
-1. Install **[Tampermonkey](https://www.tampermonkey.net/index.php)**
-   - The script requires direct page-context access, which other userscript managers do not support.
-   - If you use Chrome, you must allow Tampermonkey to run scripts: [Permission to execute userscripts](https://www.tampermonkey.net/faq.php#Q209).
+1. Install **[Violentmonkey](https://violentmonkey.github.io/)** or **[Tampermonkey](https://www.tampermonkey.net/index.php)**
+   - The script requires direct page-context access & CSP bypassing, which not all UserScript managers support.
+   - If you use Firefox, and installed Violentmonkey, you must enable `Bypass CSP in Firefox` in it's settings.
+   - If you use Chrome, and installed Tampermonkey, you must allow it to run scripts: [Permission to execute userscripts](https://www.tampermonkey.net/faq.php#Q209).
 2. Open the script on:
    - **[GreasyFork](https://greasyfork.org/scripts/546762-spotify-ai-artist-blocker)**
    - **[GitHub](https://github.com/CennoxX/spotify-ai-blocker/raw/refs/heads/main/SpotifyAiBlocker.user.js)**
